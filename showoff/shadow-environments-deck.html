@@ -1,0 +1,620 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shadow Environments - Test Before You Push</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', Roboto, sans-serif;
+            background: #000;
+            color: #fff;
+            overflow: hidden;
+        }
+
+        .slide {
+            display: none;
+            width: 100vw;
+            height: 100vh;
+            padding: 60px 80px;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .slide.active {
+            display: flex;
+        }
+
+        /* Typography */
+        .headline {
+            font-size: 72px;
+            font-weight: 700;
+            letter-spacing: -2px;
+            line-height: 1.1;
+            margin-bottom: 24px;
+        }
+
+        .subhead {
+            font-size: 32px;
+            font-weight: 400;
+            color: rgba(255,255,255,0.7);
+            line-height: 1.4;
+        }
+
+        .section-label {
+            font-size: 14px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: #0A84FF;
+            margin-bottom: 16px;
+        }
+
+        .big-number {
+            font-size: 180px;
+            font-weight: 700;
+            letter-spacing: -8px;
+            background: linear-gradient(135deg, #0A84FF, #5E5CE6);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            line-height: 1;
+        }
+
+        .medium-headline {
+            font-size: 48px;
+            font-weight: 600;
+            letter-spacing: -1px;
+            line-height: 1.2;
+            margin-bottom: 20px;
+        }
+
+        /* Layout helpers */
+        .center {
+            text-align: center;
+            align-items: center;
+        }
+
+        .split {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 80px;
+            align-items: center;
+            height: 100%;
+        }
+
+        .thirds {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 40px;
+            margin-top: 40px;
+        }
+
+        /* Cards */
+        .card {
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 16px;
+            padding: 32px;
+        }
+
+        .card-title {
+            font-size: 20px;
+            font-weight: 600;
+            margin-bottom: 12px;
+            color: #0A84FF;
+        }
+
+        .card-text {
+            font-size: 16px;
+            color: rgba(255,255,255,0.7);
+            line-height: 1.5;
+        }
+
+        /* Code blocks */
+        .code-block {
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 12px;
+            padding: 24px 32px;
+            font-family: 'SF Mono', 'Fira Code', monospace;
+            font-size: 18px;
+            line-height: 1.6;
+            color: #98D4A0;
+            margin: 20px 0;
+            overflow-x: auto;
+        }
+
+        .code-comment {
+            color: rgba(255,255,255,0.4);
+        }
+
+        .code-keyword {
+            color: #FF7AC6;
+        }
+
+        .code-string {
+            color: #98D4A0;
+        }
+
+        /* Architecture diagram */
+        .architecture {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            padding: 40px;
+        }
+
+        .arch-row {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+        }
+
+        .arch-box {
+            background: rgba(10, 132, 255, 0.2);
+            border: 2px solid #0A84FF;
+            border-radius: 12px;
+            padding: 20px 32px;
+            text-align: center;
+            font-weight: 600;
+            min-width: 180px;
+        }
+
+        .arch-box.highlight {
+            background: rgba(94, 92, 230, 0.3);
+            border-color: #5E5CE6;
+        }
+
+        .arch-box.container {
+            background: rgba(48, 209, 88, 0.2);
+            border-color: #30D158;
+        }
+
+        .arch-arrow {
+            font-size: 32px;
+            color: rgba(255,255,255,0.3);
+            text-align: center;
+        }
+
+        /* Lists */
+        .feature-list {
+            list-style: none;
+            margin-top: 24px;
+        }
+
+        .feature-list li {
+            font-size: 24px;
+            padding: 16px 0;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .feature-list li:last-child {
+            border-bottom: none;
+        }
+
+        .check {
+            color: #30D158;
+            font-size: 24px;
+        }
+
+        /* Flow diagram */
+        .flow {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 24px;
+            margin: 40px 0;
+            flex-wrap: wrap;
+        }
+
+        .flow-step {
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(255,255,255,0.2);
+            border-radius: 12px;
+            padding: 20px 28px;
+            text-align: center;
+        }
+
+        .flow-step.active {
+            background: rgba(10, 132, 255, 0.2);
+            border-color: #0A84FF;
+        }
+
+        .flow-arrow {
+            font-size: 24px;
+            color: rgba(255,255,255,0.3);
+        }
+
+        /* Navigation */
+        .nav {
+            position: fixed;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 8px;
+            z-index: 100;
+        }
+
+        .nav-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.3);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .nav-dot.active {
+            background: #0A84FF;
+            width: 24px;
+            border-radius: 4px;
+        }
+
+        .slide-counter {
+            position: fixed;
+            bottom: 30px;
+            right: 40px;
+            font-size: 14px;
+            color: rgba(255,255,255,0.4);
+        }
+
+        /* Comparison table */
+        .comparison {
+            width: 100%;
+            margin-top: 32px;
+        }
+
+        .comparison-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 2px;
+            margin-bottom: 2px;
+        }
+
+        .comparison-cell {
+            background: rgba(255,255,255,0.05);
+            padding: 20px 24px;
+            font-size: 18px;
+        }
+
+        .comparison-cell.header {
+            background: rgba(10, 132, 255, 0.2);
+            font-weight: 600;
+        }
+
+        .comparison-cell.bad {
+            color: #FF6B6B;
+        }
+
+        .comparison-cell.good {
+            color: #30D158;
+        }
+
+        .small-text {
+            font-size: 16px;
+            color: rgba(255,255,255,0.5);
+            margin-top: 16px;
+        }
+
+        /* Highlight box */
+        .highlight-box {
+            background: linear-gradient(135deg, rgba(10, 132, 255, 0.2), rgba(94, 92, 230, 0.2));
+            border: 1px solid rgba(10, 132, 255, 0.3);
+            border-radius: 16px;
+            padding: 32px 40px;
+            margin: 24px 0;
+        }
+    </style>
+</head>
+<body>
+    <!-- Slide 1: Title -->
+    <div class="slide active center">
+        <div class="section-label">Amplifier Feature</div>
+        <h1 class="headline">Shadow Environments</h1>
+        <p class="subhead">Test your code in isolation before you push.<br>No more "works on my machine."</p>
+        <div class="small-text" style="margin-top: 40px;">January 2026</div>
+    </div>
+
+    <!-- Slide 2: The Problem -->
+    <div class="slide">
+        <div class="section-label">The Problem</div>
+        <h2 class="headline">AI writes code fast.<br>But does it actually work?</h2>
+        <div class="thirds">
+            <div class="card">
+                <div class="card-title">Dependency Hell</div>
+                <div class="card-text">Your local env has packages the CI doesn't. Tests pass locally, fail in production.</div>
+            </div>
+            <div class="card">
+                <div class="card-title">Uncommitted Changes</div>
+                <div class="card-text">You want to test before committing, but your dependencies aren't published yet.</div>
+            </div>
+            <div class="card">
+                <div class="card-title">Multi-Repo Chaos</div>
+                <div class="card-text">Changes span 3 repos. Which order do you push? What if one breaks the others?</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Slide 3: The Solution -->
+    <div class="slide center">
+        <div class="section-label">The Solution</div>
+        <h2 class="headline">Real Docker containers with<br>your exact working state</h2>
+        <p class="subhead" style="max-width: 800px; margin-top: 24px;">
+            Not venvs. Full OS-level isolation via Docker or Podman.<br>
+            Your uncommitted changes are snapshotted and served via an embedded git server.
+        </p>
+        <div class="highlight-box" style="margin-top: 40px; display: inline-block;">
+            <strong>Docker/Podman containers</strong> = fresh filesystem, isolated processes, real network stack
+        </div>
+    </div>
+
+    <!-- Slide 4: How It Works -->
+    <div class="slide">
+        <div class="section-label">Architecture</div>
+        <h2 class="medium-headline">Selective Git URL Rewriting</h2>
+        <div class="architecture">
+            <div class="arch-row">
+                <div class="arch-box">Your Working Directory</div>
+            </div>
+            <div class="arch-arrow">snapshot (uncommitted changes included)</div>
+            <div class="arch-row">
+                <div class="arch-box container">Shadow Container</div>
+            </div>
+            <div class="arch-arrow">contains</div>
+            <div class="arch-row">
+                <div class="arch-box highlight">Embedded Gitea Server</div>
+                <div class="arch-box">Your Commands</div>
+            </div>
+            <div class="arch-arrow">git clone github.com/org/your-lib rewritten to localhost:3000</div>
+            <div class="arch-row">
+                <div class="arch-box" style="background: rgba(48, 209, 88, 0.2); border-color: #30D158;">Your Local Code</div>
+                <div class="arch-box">Real GitHub (everything else)</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Slide 5: Key Insight -->
+    <div class="slide center">
+        <div class="big-number">0</div>
+        <h2 class="medium-headline" style="margin-top: 24px;">staging required</h2>
+        <p class="subhead" style="max-width: 700px;">
+            Your working directory is captured exactly as-is.<br>
+            New files, modifications, deletions - no git add needed.
+        </p>
+    </div>
+
+    <!-- Slide 6: Usage - Natural Language -->
+    <div class="slide">
+        <div class="section-label">Usage</div>
+        <h2 class="medium-headline">Just ask naturally</h2>
+        <div class="code-block">
+<span class="code-comment"># In any Amplifier session:</span>
+
+"Create a shadow environment and test if my-library installs correctly"
+
+"Test my local changes to auth-service in an isolated container"
+
+"Verify this works on a fresh machine"
+        </div>
+        <p class="subhead" style="margin-top: 24px;">
+            The shadow-operator agent handles container creation, source snapshotting, and test execution.
+        </p>
+    </div>
+
+    <!-- Slide 7: Usage - Programmatic -->
+    <div class="slide">
+        <div class="section-label">Programmatic Control</div>
+        <h2 class="medium-headline">Full tool integration</h2>
+        <div class="code-block">
+<span class="code-comment"># Create with local sources</span>
+shadow(operation=<span class="code-string">"create"</span>, local_sources=[
+    <span class="code-string">"~/repos/my-lib:myorg/my-lib"</span>
+])
+
+<span class="code-comment"># Run commands inside</span>
+shadow(operation=<span class="code-string">"exec"</span>, shadow_id=<span class="code-string">"..."</span>,
+    command=<span class="code-string">"uv pip install git+https://github.com/myorg/my-lib"</span>)
+
+<span class="code-comment"># Check what changed</span>
+shadow(operation=<span class="code-string">"diff"</span>, shadow_id=<span class="code-string">"..."</span>)
+
+<span class="code-comment"># Clean up</span>
+shadow(operation=<span class="code-string">"destroy"</span>, shadow_id=<span class="code-string">"..."</span>)
+        </div>
+    </div>
+
+    <!-- Slide 8: Multi-Repo Testing -->
+    <div class="slide">
+        <div class="section-label">Multi-Repo Development</div>
+        <h2 class="medium-headline">Test cross-repo changes together</h2>
+        <div class="code-block">
+<span class="code-comment"># Snapshot multiple repos</span>
+shadow(operation=<span class="code-string">"create"</span>, local_sources=[
+    <span class="code-string">"~/repos/amplifier-core:microsoft/amplifier-core"</span>,
+    <span class="code-string">"~/repos/amplifier-foundation:microsoft/amplifier-foundation"</span>
+])
+
+<span class="code-comment"># Install amplifier - uses YOUR local amplifier-core</span>
+shadow(operation=<span class="code-string">"exec"</span>, command=<span class="code-string">"uv tool install git+https://github.com/microsoft/amplifier"</span>)
+
+<span class="code-comment"># Everything else fetches from real GitHub</span>
+        </div>
+        <div class="highlight-box">
+            <strong>Key:</strong> Only repos you specify redirect to your snapshots. Everything else uses real GitHub - no isolation theater.
+        </div>
+    </div>
+
+    <!-- Slide 9: Validation -->
+    <div class="slide">
+        <div class="section-label">Self-Validating</div>
+        <h2 class="medium-headline">Preflight checks before you waste time</h2>
+        <ul class="feature-list">
+            <li><span class="check">&#10003;</span> Gitea server health</li>
+            <li><span class="check">&#10003;</span> Local source mirroring verified</li>
+            <li><span class="check">&#10003;</span> Tools available (uv, pip, git)</li>
+            <li><span class="check">&#10003;</span> API keys passed through</li>
+            <li><span class="check">&#10003;</span> UV cache isolated (no stale packages)</li>
+        </ul>
+        <div class="code-block" style="margin-top: 32px;">
+shadow(operation=<span class="code-string">"preflight"</span>, shadow_id=<span class="code-string">"..."</span>)
+        </div>
+    </div>
+
+    <!-- Slide 10: Before/After -->
+    <div class="slide">
+        <div class="section-label">The Difference</div>
+        <h2 class="medium-headline">Before vs. After</h2>
+        <div class="comparison">
+            <div class="comparison-row">
+                <div class="comparison-cell header">Scenario</div>
+                <div class="comparison-cell header">Before Shadow</div>
+                <div class="comparison-cell header">With Shadow</div>
+            </div>
+            <div class="comparison-row">
+                <div class="comparison-cell">Test uncommitted code</div>
+                <div class="comparison-cell bad">Commit to branch, push, wait for CI</div>
+                <div class="comparison-cell good">Instant local test</div>
+            </div>
+            <div class="comparison-row">
+                <div class="comparison-cell">Multi-repo changes</div>
+                <div class="comparison-cell bad">Push in order, hope nothing breaks</div>
+                <div class="comparison-cell good">Test all together first</div>
+            </div>
+            <div class="comparison-row">
+                <div class="comparison-cell">Verify "works on my machine"</div>
+                <div class="comparison-cell bad">Ask colleague to test</div>
+                <div class="comparison-cell good">Fresh container in seconds</div>
+            </div>
+            <div class="comparison-row">
+                <div class="comparison-cell">Debug dependency issues</div>
+                <div class="comparison-cell bad">Recreate from scratch</div>
+                <div class="comparison-cell good">Isolated, reproducible env</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Slide 11: Security -->
+    <div class="slide">
+        <div class="section-label">Security</div>
+        <h2 class="medium-headline">Isolation you can trust</h2>
+        <div class="thirds">
+            <div class="card">
+                <div class="card-title">Filesystem</div>
+                <div class="card-text">Only /workspace and home are writable. Your system is protected.</div>
+            </div>
+            <div class="card">
+                <div class="card-title">API Keys</div>
+                <div class="card-text">Auto-passed from environment. Never stored in container images.</div>
+            </div>
+            <div class="card">
+                <div class="card-title">Network</div>
+                <div class="card-text">Full access to test real integrations. No proxy surprises.</div>
+            </div>
+        </div>
+        <div class="highlight-box" style="margin-top: 40px;">
+            Containers run with dropped capabilities and resource limits. Defense in depth.
+        </div>
+    </div>
+
+    <!-- Slide 12: Available Now -->
+    <div class="slide center">
+        <div class="section-label">Availability</div>
+        <h2 class="headline">Bundled with Foundation</h2>
+        <p class="subhead" style="max-width: 700px; margin-top: 24px;">
+            All Amplifier Foundation users have shadow environments automatically.<br>
+            No additional installation required.
+        </p>
+        <div class="code-block" style="margin-top: 40px; text-align: left; display: inline-block;">
+<span class="code-comment"># Just use it</span>
+"Create a shadow environment to test my changes"
+        </div>
+    </div>
+
+    <!-- Slide 13: Velocity -->
+    <div class="slide center">
+        <h2 class="medium-headline">Development velocity</h2>
+        <p class="subhead">Built in one sprint</p>
+        
+        <div class="thirds" style="margin-top: 40px;">
+            <div class="card" style="text-align: center;">
+                <div style="font-size: 48px; font-weight: 700; color: #0A84FF;">2</div>
+                <div class="small-text">Repositories</div>
+            </div>
+            <div class="card" style="text-align: center;">
+                <div style="font-size: 48px; font-weight: 700; color: #0A84FF;">12</div>
+                <div class="small-text">PRs merged</div>
+            </div>
+            <div class="card" style="text-align: center;">
+                <div style="font-size: 48px; font-weight: 700; color: #0A84FF;">6</div>
+                <div class="small-text">Days of development</div>
+            </div>
+        </div>
+        
+        <div class="small-text" style="margin-top: 32px;">
+            amplifier-bundle-shadow • amplifier-module-tool-shadow
+        </div>
+    </div>
+
+    <!-- Slide 14: CTA -->
+    <div class="slide center">
+        <h2 class="headline">Test before you push.</h2>
+        <p class="subhead" style="margin-top: 24px;">github.com/microsoft/amplifier-bundle-shadow</p>
+        <div class="small-text" style="margin-top: 60px;">
+            Part of the Amplifier ecosystem<br>
+            github.com/microsoft/amplifier
+        </div>
+    </div>
+
+    <!-- Navigation -->
+    <div class="nav" id="nav"></div>
+    <div class="slide-counter" id="counter"></div>
+
+    <script>
+        const slides = document.querySelectorAll('.slide');
+        let currentSlide = 0;
+
+        function showSlide(n) {
+            slides[currentSlide].classList.remove('active');
+            currentSlide = (n + slides.length) % slides.length;
+            slides[currentSlide].classList.add('active');
+            updateNav();
+        }
+
+        function updateNav() {
+            const nav = document.getElementById('nav');
+            const counter = document.getElementById('counter');
+            nav.innerHTML = '';
+            slides.forEach((_, i) => {
+                const dot = document.createElement('div');
+                dot.className = 'nav-dot' + (i === currentSlide ? ' active' : '');
+                dot.onclick = () => showSlide(i);
+                nav.appendChild(dot);
+            });
+            counter.textContent = `${currentSlide + 1} / ${slides.length}`;
+        }
+
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowRight' || e.key === ' ') showSlide(currentSlide + 1);
+            if (e.key === 'ArrowLeft') showSlide(currentSlide - 1);
+        });
+
+        document.addEventListener('click', (e) => {
+            if (e.target.closest('.nav')) return;
+            if (e.clientX > window.innerWidth / 2) showSlide(currentSlide + 1);
+            else showSlide(currentSlide - 1);
+        });
+
+        updateNav();
+    </script>
+</body>
+</html>
