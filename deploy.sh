@@ -44,7 +44,7 @@ else
         if [ -f "$f" ]; then
             cp "$f" "$SHAREPOINT_DECKS_PATH"
             echo "✓ $(basename "$f")"
-            ((count++))
+            count=$((count + 1))
         fi
     done
     echo ""
