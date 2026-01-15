@@ -16,8 +16,24 @@ When asked to "tell a story about X" or "create a deck for Y":
 2. **Design** - Plan the narrative arc: problem → solution → impact → velocity
 3. **Create** - Build a self-contained HTML deck following the style guide
 4. **Save** - Write to `docs/` with a descriptive filename
-5. **Wait for approval** - Don't deploy automatically
-6. **Deploy on request** - When user says "deploy" or "ship it", run `./deploy.sh`
+5. **Update index** - Add the new deck to `docs/index.html` (see Index Maintenance below)
+6. **Wait for approval** - Don't deploy automatically
+7. **Deploy on request** - When user says "deploy" or "ship it", commit and push to GitHub
+
+## Index Maintenance
+
+**IMPORTANT**: After creating any new deck, you MUST update `docs/index.html`:
+
+1. Add a new `<a href="..." class="deck-card">` entry in the appropriate category section
+2. Choose the right category class:
+   - `category-showcase` (blue) - Full projects built with Amplifier
+   - `category-feature` (green) - Platform capabilities
+   - `category-devex` (purple) - Developer experience improvements
+   - `category-enterprise` (orange) - Enterprise/compliance features
+3. Include: title, description (1-2 sentences), slide count
+4. Keep cards in logical order within each category
+
+The index is the landing page at https://ramparte.github.io/amplifier-stories/
 
 ## Presentation Style: "Useful Apple Keynote"
 

@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Amplifier Stories</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', Roboto, sans-serif;
+            background: #000;
+            color: #fff;
+            min-height: 100vh;
+            padding: 60px 40px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        /* Header */
+        .header {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+
+        .section-label {
+            font-size: 14px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: #0A84FF;
+            margin-bottom: 16px;
+        }
+
+        .headline {
+            font-size: 56px;
+            font-weight: 700;
+            letter-spacing: -2px;
+            line-height: 1.1;
+            margin-bottom: 16px;
+        }
+
+        .subhead {
+            font-size: 20px;
+            font-weight: 400;
+            color: rgba(255,255,255,0.6);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        /* Deck Grid */
+        .deck-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+            gap: 24px;
+            margin-top: 40px;
+        }
+
+        .deck-card {
+            background: rgba(255,255,255,0.03);
+            border: 1px solid rgba(255,255,255,0.08);
+            border-radius: 16px;
+            padding: 28px;
+            text-decoration: none;
+            color: inherit;
+            transition: all 0.2s ease;
+            display: block;
+        }
+
+        .deck-card:hover {
+            background: rgba(255,255,255,0.06);
+            border-color: rgba(255,255,255,0.15);
+            transform: translateY(-2px);
+        }
+
+        .deck-category {
+            font-size: 12px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            margin-bottom: 12px;
+        }
+
+        .deck-title {
+            font-size: 24px;
+            font-weight: 600;
+            letter-spacing: -0.5px;
+            margin-bottom: 12px;
+            line-height: 1.2;
+        }
+
+        .deck-description {
+            font-size: 15px;
+            color: rgba(255,255,255,0.6);
+            line-height: 1.5;
+        }
+
+        .deck-meta {
+            margin-top: 16px;
+            font-size: 13px;
+            color: rgba(255,255,255,0.4);
+        }
+
+        /* Category colors */
+        .category-showcase { color: #0A84FF; }
+        .category-feature { color: #30D158; }
+        .category-devex { color: #BF5AF2; }
+        .category-enterprise { color: #FF9F0A; }
+
+        /* Footer */
+        .footer {
+            margin-top: 80px;
+            text-align: center;
+            padding-top: 40px;
+            border-top: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .footer-text {
+            font-size: 14px;
+            color: rgba(255,255,255,0.4);
+        }
+
+        .footer-link {
+            color: #0A84FF;
+            text-decoration: none;
+        }
+
+        .footer-link:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <div class="section-label">Presentation Decks</div>
+            <h1 class="headline">Amplifier Stories</h1>
+            <p class="subhead">Showcasing features, projects, and capabilities built with Amplifier</p>
+        </header>
+
+        <div class="deck-grid">
+            <!-- Showcase Projects -->
+            <a href="cortex-amplifier-presentation.html" class="deck-card">
+                <div class="deck-category category-showcase">Showcase Project</div>
+                <div class="deck-title">Cortex</div>
+                <div class="deck-description">An AI-native operating system for thought. Built in 3 days with Amplifier, demonstrating rapid prototyping of complex applications.</div>
+                <div class="deck-meta">11 slides</div>
+            </a>
+
+            <a href="attention-firewall-deck.html" class="deck-card">
+                <div class="deck-category category-showcase">Showcase Project</div>
+                <div class="deck-title">Attention Firewall</div>
+                <div class="deck-description">AI-powered Windows notification filtering. Evaluates every notification against your current context and only surfaces what matters.</div>
+                <div class="deck-meta">11 slides</div>
+            </a>
+
+            <!-- Platform Features -->
+            <a href="shadow-environments-deck.html" class="deck-card">
+                <div class="deck-category category-feature">Platform Feature</div>
+                <div class="deck-title">Shadow Environments</div>
+                <div class="deck-description">OS-level isolated containers for safe testing. Snapshot your local changes and test them in a fresh environment before pushing.</div>
+                <div class="deck-meta">10 slides</div>
+            </a>
+
+            <a href="session-forking-deck.html" class="deck-card">
+                <div class="deck-category category-feature">Platform Feature</div>
+                <div class="deck-title">Session Forking</div>
+                <div class="deck-description">Branch your conversations at any point. Explore alternate approaches without losing your original thread. Git for conversations.</div>
+                <div class="deck-meta">13 slides</div>
+            </a>
+
+            <a href="notifications-deck.html" class="deck-card">
+                <div class="deck-category category-feature">Platform Feature</div>
+                <div class="deck-title">Notifications</div>
+                <div class="deck-description">Desktop and mobile push notifications when Amplifier needs input. Stop watching the terminal - it tells you when it's ready.</div>
+                <div class="deck-meta">10 slides</div>
+            </a>
+
+            <!-- Developer Experience -->
+            <a href="cost-optimization-deck.html" class="deck-card">
+                <div class="deck-category category-devex">Developer Experience</div>
+                <div class="deck-title">Cost Optimization</div>
+                <div class="deck-description">Three ways Amplifier reduces API costs: prompt caching (90%), model selection (12x), and loop architecture (10x at scale).</div>
+                <div class="deck-meta">12 slides</div>
+            </a>
+
+            <!-- Enterprise -->
+            <a href="ecosystem-audit-deck.html" class="deck-card">
+                <div class="deck-category category-enterprise">Enterprise</div>
+                <div class="deck-title">Ecosystem Audit</div>
+                <div class="deck-description">Automated compliance checking across 50+ repos. One command audits for required files and can auto-create fix PRs.</div>
+                <div class="deck-meta">10 slides</div>
+            </a>
+        </div>
+
+        <footer class="footer">
+            <p class="footer-text">
+                Built with <a href="https://github.com/microsoft/amplifier" class="footer-link">Amplifier</a> · 
+                <a href="https://github.com/ramparte/amplifier-stories" class="footer-link">View source</a>
+            </p>
+        </footer>
+    </div>
+</body>
+</html>
