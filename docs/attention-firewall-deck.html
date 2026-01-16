@@ -370,6 +370,20 @@
             color: rgba(255,255,255,0.5);
             margin-top: 8px;
         }
+            /* More stories link */
+        .more-stories {
+            position: fixed;
+            bottom: 10px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 12px;
+            color: rgba(255,255,255,0.3);
+            text-decoration: none;
+            z-index: 100;
+        }
+        .more-stories:hover {
+            color: rgba(255,255,255,0.5);
+        }
     </style>
 </head>
 <body>
@@ -711,5 +725,6 @@ attention-firewall check
 
         updateNav();
     </script>
+    <a href="index.html" class="more-stories">More Amplifier Stories</a>
 </body>
 </html>

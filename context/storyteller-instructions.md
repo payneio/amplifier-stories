@@ -39,6 +39,21 @@ Start with this structure:
     <title>Deck Title</title>
     <style>
         /* Full CSS inline - see presentation-styles.md */
+        
+        /* More stories link - REQUIRED on all decks */
+        .more-stories {
+            position: fixed;
+            bottom: 10px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 12px;
+            color: rgba(255,255,255,0.3);
+            text-decoration: none;
+            z-index: 100;
+        }
+        .more-stories:hover {
+            color: rgba(255,255,255,0.5);
+        }
     </style>
 </head>
 <body>
@@ -49,6 +64,9 @@ Start with this structure:
     <!-- Navigation -->
     <div class="nav" id="nav"></div>
     <div class="slide-counter" id="counter"></div>
+    
+    <!-- More stories link - REQUIRED -->
+    <a href="index.html" class="more-stories">More Amplifier Stories</a>
     
     <script>
         /* Navigation JS - arrow keys, click, dots */
@@ -161,6 +179,7 @@ Before presenting to user:
 - [ ] Consistent color scheme throughout
 - [ ] Velocity slide has accurate numbers
 - [ ] All links are correct
+- [ ] "More Amplifier Stories" link present (links to index.html)
 
 ## Deployment Workflow
 
