@@ -1,36 +1,108 @@
 ---
 bundle:
-  name: amplifier-stories
-  version: 1.0.0
-  description: Create polished HTML presentations showcasing Amplifier features and projects
+  name: amplifier-module-stories
+  version: 2.0.0
+  description: Autonomous storytelling engine for the Amplifier ecosystem - automated content generation across formats and audiences
 
 includes:
   - bundle: git+https://github.com/microsoft/amplifier-foundation@main
 
 agents:
+  # Legacy agent (maintained for backward compatibility)
   storyteller:
-    path: amplifier-stories:agents/storyteller.md
+    path: amplifier-module-stories:agents/storyteller.md
+  
+  # Specialist agents for autonomous storytelling
+  story-researcher:
+    path: amplifier-module-stories:agents/story-researcher.md
+  content-strategist:
+    path: amplifier-module-stories:agents/content-strategist.md
+  technical-writer:
+    path: amplifier-module-stories:agents/technical-writer.md
+  marketing-writer:
+    path: amplifier-module-stories:agents/marketing-writer.md
+  executive-briefer:
+    path: amplifier-module-stories:agents/executive-briefer.md
+  release-manager:
+    path: amplifier-module-stories:agents/release-manager.md
+  case-study-writer:
+    path: amplifier-module-stories:agents/case-study-writer.md
+  data-analyst:
+    path: amplifier-module-stories:agents/data-analyst.md
+  content-adapter:
+    path: amplifier-module-stories:agents/content-adapter.md
+  community-manager:
+    path: amplifier-module-stories:agents/community-manager.md
+
+recipes:
+  session-to-case-study:
+    path: amplifier-module-stories:recipes/session-to-case-study.yaml
+  git-tag-to-changelog:
+    path: amplifier-module-stories:recipes/git-tag-to-changelog.yaml
+  weekly-digest:
+    path: amplifier-module-stories:recipes/weekly-digest.yaml
+  blog-post-generator:
+    path: amplifier-module-stories:recipes/blog-post-generator.yaml
 ---
 
-# Amplifier Stories
+# Amplifier Module: Stories
 
-A bundle for creating polished HTML presentation decks that showcase Amplifier features and projects.
+**Autonomous storytelling engine for the Amplifier ecosystem.**
 
-## What This Bundle Does
+From manual "create a deck about X" to automated story generation from live data - across formats, audiences, and use cases.
 
-The **storyteller** agent creates "Useful Apple Keynote" style presentations:
-- Black backgrounds, clean typography
-- One concept per slide with big impact numbers
-- Code examples, comparison tables, flow diagrams
-- Velocity slides showing development speed
-- Automatic deployment to SharePoint (if configured)
+## The Transformation
 
-## Usage
+**Before:** Manual presentation creation  
+**After:** Autonomous content engine that captures, adapts, and distributes stories automatically
 
+### Three Core Capabilities
+
+1. **Automated Story Generation** - Stories emerge from data (git, sessions, bundles)
+2. **Multi-Audience Adaptation** - One story → technical, executive, community voices
+3. **Ecosystem Intelligence** - Deep integration with Amplifier's data sources
+
+## What This Module Does
+
+### Content Formats (5)
+- **HTML** - "Useful Apple Keynote" style presentations
+- **PowerPoint** - Professional .pptx with black backgrounds and blue gradients
+- **Excel** - Data dashboards, metrics tracking, comparisons
+- **Word** - Technical docs, proposals, case studies
+- **PDF** - Executive one-pagers and summaries
+
+### Specialist Agents (10)
+- **story-researcher** - Automated data gathering from ecosystem
+- **content-strategist** - Determines what stories to tell
+- **technical-writer** - Deep technical documentation
+- **marketing-writer** - External communication
+- **executive-briefer** - High-level summaries for decision-makers
+- **release-manager** - Automated release documentation
+- **case-study-writer** - Turns sessions into narratives
+- **data-analyst** - Transforms raw data into insights
+- **content-adapter** - Converts between formats and audiences
+- **community-manager** - Community engagement content
+
+### Automated Workflows (4 Recipes)
+- **Session→Case Study** - Turn breakthrough sessions into shareable content
+- **Git Tag→Changelog** - Generate release notes automatically
+- **Weekly Digest** - Regular ecosystem updates with zero manual work
+- **Blog Post Generator** - Feature stories for community
+
+## Quick Start
+
+### Basic Usage (Manual)
 ```
-"Use storyteller to tell a story about [feature]"
-"Create a deck about the new shadow environments feature"
-"Make a presentation showing off recipe cancellation"
+"Create a PowerPoint about shadow environments"
+"Make an Excel dashboard showing adoption metrics"
+"Write a case study about the Surface feature development"
+```
+
+### Automated Usage (Recipes)
+```
+"Run the weekly digest recipe"
+"Generate a case study from this session"
+"Create release notes for the v2.0 tag"
 ```
 
 ## Local Configuration
