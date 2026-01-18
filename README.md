@@ -1,15 +1,43 @@
-# Amplifier Stories
+# Amplifier Module: Stories
 
-Create polished presentations and documents showcasing Amplifier features and projects in multiple formats.
+**Autonomous storytelling engine for the Amplifier ecosystem.**
 
-## What This Bundle Does
+Transform development activity into professional content - automatically, across formats and audiences.
 
-The **storyteller** agent creates professional content in five formats:
-- **HTML** - "Useful Apple Keynote" style presentations
-- **PowerPoint** - Professional .pptx presentations
-- **Excel** - Data-driven dashboards and analysis
-- **Word** - Detailed documentation and reports
-- **PDF** - Final deliverables and forms
+## What This Module Does
+
+**v2.0 Transformation:** From manual presentation tool to autonomous content engine.
+
+### Three Core Capabilities
+
+1. **Automated Story Generation** - Content emerges from live data (git, sessions, bundles)
+2. **Multi-Audience Adaptation** - One story → technical, executive, and community voices
+3. **Ecosystem Intelligence** - Deep integration with Amplifier's data sources
+
+### Content Formats (5)
+- **HTML** - "Useful Apple Keynote" style presentations (14 existing decks)
+- **PowerPoint** - Professional .pptx with black backgrounds and blue gradients
+- **Excel** - Data dashboards, metrics tracking, ROI analysis
+- **Word** - Technical docs, proposals, case studies
+- **PDF** - Executive one-pagers and summaries
+
+### Specialist Agents (10)
+- **story-researcher** - Automated data gathering from ecosystem
+- **content-strategist** - Story selection and planning
+- **technical-writer** - Deep technical documentation
+- **marketing-writer** - Community and public communication
+- **executive-briefer** - High-level summaries and ROI content
+- **release-manager** - Automated release documentation
+- **case-study-writer** - Narrative case studies from sessions
+- **data-analyst** - Data transformation and visualization
+- **content-adapter** - Format and audience transformation
+- **community-manager** - Community engagement and recognition
+
+### Automated Workflows (4 Recipes)
+- **Session→Case Study** - Turn breakthrough sessions into shareable content
+- **Git Tag→Changelog** - Generate complete release documentation automatically
+- **Weekly Digest** - Regular ecosystem updates with zero manual work
+- **Blog Post Generator** - Feature stories for community from git data
 
 ## Quick Start
 
