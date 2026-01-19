@@ -57,20 +57,25 @@
             min-height: 100%;
             display: flex;
             flex-direction: column;
-            justify-content: center;
             align-items: center;
-            padding: clamp(24px, 5vw, 60px) clamp(16px, 4vw, 80px);
+            padding: clamp(60px, 10vw, 120px) clamp(16px, 4vw, 80px) clamp(80px, 12vw, 100px);
             opacity: 0;
             pointer-events: none;
             transition: opacity 0.6s ease;
             background: var(--bg-slide);
             text-align: center;
             z-index: 1;
+            overflow-y: auto;
+            overflow-x: hidden;
         }
-        
+
         .slide.active {
             opacity: 1;
             pointer-events: auto;
+        }
+
+        .slide.center {
+            justify-content: center;
         }
         
         /* Typography */
@@ -504,7 +509,7 @@
     <div class="presentation">
         
         <!-- Slide 1: Title -->
-        <div class="slide active" data-slide="1">
+        <div class="slide active center" data-slide="1">
             <div class="tagline">Built with Amplifier</div>
             <div class="title-massive">Cortex</div>
             <div class="subhead">A personal AI platform that protects your attention, learns your preferences, and amplifies your capabilities.</div>
@@ -711,7 +716,7 @@
         </div>
         
         <!-- Slide 9: The Quote -->
-        <div class="slide" data-slide="9">
+        <div class="slide center" data-slide="9">
             <div class="quote-block">
                 <div class="quote-text">I did NO technical directing down in the weeds. I explained outcomes, asked what was possible, told it to try things, and gave my feedback.</div>
                 <div class="quote-author">— Brian Krabach, Lead Developer</div>
@@ -798,7 +803,7 @@
         </div>
         
         <!-- Slide 13: Resources -->
-        <div class="slide" data-slide="13">
+        <div class="slide center" data-slide="13">
             <div class="tagline">Get Started</div>
             <div class="title-massive">What will you build?</div>
             <div class="card-grid card-grid-3" style="margin-top: 64px;">

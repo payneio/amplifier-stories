@@ -45,6 +45,7 @@ tools/*.json
 
 # Claude artifacts
 .claude/
+CLAUDE.md
 
 # OS files
 .DS_Store

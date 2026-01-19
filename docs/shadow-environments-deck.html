@@ -18,7 +18,7 @@
             --font-body: clamp(14px, 2.5vw, 16px);
             --font-small: clamp(12px, 2vw, 14px);
             --font-code: clamp(12px, 2vw, 15px);
-            --padding-slide: clamp(24px, 6vw, 60px) clamp(20px, 5vw, 80px);
+            --padding-slide: clamp(60px, 10vw, 120px) clamp(20px, 5vw, 80px) clamp(80px, 12vw, 100px);
             --gap-grid: clamp(16px, 4vw, 40px);
             --radius-card: clamp(12px, 2vw, 16px);
             --color-accent: #30D158;
@@ -38,7 +38,8 @@
             min-height: 100dvh;
             padding: var(--padding-slide);
             flex-direction: column;
-            justify-content: center;
+            overflow-y: auto;
+            overflow-x: hidden;
         }
 
         .slide.active {
@@ -80,6 +81,7 @@
         .center {
             text-align: center;
             align-items: center;
+            justify-content: center;
         }
 
         .thirds {

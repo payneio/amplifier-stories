@@ -30,6 +30,11 @@ Before creating a deck, gather:
 
 **IMPORTANT**: All presentations must be responsive and work across devices. See `context/responsive-design.md` for complete guidelines.
 
+**CRITICAL - Slide Overflow Pattern**: Do NOT use `justify-content: center` on all slides. This causes content clipping on mobile. Instead:
+- Slides flow from top by default (with generous top padding)
+- Use `.center` class only for title slides that need vertical centering
+- Always include `overflow-y: auto` on slides
+
 Start with this structure:
 
 ```html
@@ -37,18 +42,58 @@ Start with this structure:
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
     <title>Deck Title</title>
     <style>
-        /* Full CSS inline - see presentation-styles.md */
-        
+        /* Core slide CSS - CRITICAL for preventing content clipping */
+        .slide {
+            display: none;
+            width: 100vw;
+            min-height: 100vh;
+            min-height: 100dvh;
+            padding: clamp(60px, 10vw, 120px) clamp(20px, 5vw, 80px) clamp(80px, 12vw, 100px);
+            flex-direction: column;
+            overflow-y: auto;      /* Enable scrolling for tall content */
+            overflow-x: hidden;    /* Prevent horizontal scroll */
+            /* NO justify-content: center here! */
+        }
+
+        .slide.active {
+            display: flex;
+        }
+
+        /* Centering is OPT-IN for title/short slides only */
+        .center {
+            text-align: center;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* Landscape mobile: reduce vertical padding */
+        @media (max-height: 500px) and (orientation: landscape) {
+            .slide {
+                padding: 16px clamp(20px, 5vw, 80px) 60px;
+            }
+            .slide.center {
+                justify-content: flex-start;
+            }
+        }
+
+        /* Accessibility: respect reduced motion preference */
+        @media (prefers-reduced-motion: reduce) {
+            .slide, .slide * {
+                animation: none !important;
+                transition: none !important;
+            }
+        }
+
         /* More stories link - REQUIRED on all decks */
         .more-stories {
             position: fixed;
             bottom: 10px;
             left: 50%;
             transform: translateX(-50%);
-            font-size: 12px;
+            font-size: clamp(11px, 1.5vw, 12px);
             color: rgba(255,255,255,0.3);
             text-decoration: none;
             z-index: 100;
@@ -197,6 +242,9 @@ Before presenting to user:
 - [ ] Navigation works (arrows, click, dots, **swipe on mobile**)
 - [ ] Slide counter updates correctly
 - [ ] No horizontal scrolling on any slide
+- [ ] **No content clipping on mobile (test at 320px viewport)**
+- [ ] **Slides use `overflow-y: auto` (not clipping tall content)**
+- [ ] **`justify-content: center` only on `.slide.center` classes**
 - [ ] Code blocks don't overflow (use `pre-wrap`)
 - [ ] Consistent color scheme throughout
 - [ ] Velocity slide has accurate numbers

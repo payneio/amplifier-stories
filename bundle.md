@@ -5,7 +5,6 @@ bundle:
   description: Autonomous storytelling engine for the Amplifier ecosystem - automated content generation across formats and audiences
 
 includes:
-  - bundle: git+https://github.com/microsoft/amplifier-foundation@main
 
 agents:
   # Legacy agent (maintained for backward compatibility)

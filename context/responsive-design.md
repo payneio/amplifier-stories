@@ -69,7 +69,50 @@ min-height: 100vh;
 min-height: 100dvh;  /* Dynamic viewport - preferred */
 ```
 
-### 6. Touch-Friendly Targets
+### 6. Slide Overflow Pattern (IMPORTANT)
+
+Slides should **NOT** use `justify-content: center` by default, as this causes content clipping when content exceeds viewport height. Instead:
+
+```css
+/* ❌ Bad - clips content at top AND bottom when overflow */
+.slide {
+    min-height: 100dvh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;  /* Causes clipping! */
+}
+
+/* ✅ Good - content flows from top, scrolls when needed */
+.slide {
+    display: none;
+    min-height: 100vh;
+    min-height: 100dvh;
+    padding: clamp(60px, 10vw, 120px) clamp(20px, 5vw, 80px) clamp(80px, 12vw, 100px);
+    flex-direction: column;
+    overflow-y: auto;    /* Enable scrolling for tall content */
+    overflow-x: hidden;  /* Prevent horizontal scroll */
+}
+
+.slide.active {
+    display: flex;
+}
+
+/* Centering is OPT-IN for title/short slides only */
+.slide.center {
+    text-align: center;
+    align-items: center;
+    justify-content: center;  /* Only when .center is applied */
+}
+```
+
+**Key Design Decisions:**
+1. **Top-aligned by default**: Content-heavy slides flow naturally from top
+2. **Centering is opt-in**: Only `.slide.center` gets vertical centering (for title slides)
+3. **Scroll when needed**: `overflow-y: auto` enables scrolling only when content exceeds viewport
+4. **Generous top padding**: Replaces centering effect for visual balance
+5. **Extra bottom padding**: Accounts for nav dots + "More Stories" link (~80-100px)
+
+### 7. Touch-Friendly Targets
 
 ```css
 /* Minimum 44px touch targets on touch devices */
@@ -86,7 +129,7 @@ min-height: 100dvh;  /* Dynamic viewport - preferred */
 }
 ```
 
-### 7. Safe Area Insets (for notched devices)
+### 8. Safe Area Insets (for notched devices)
 
 ```css
 /* Viewport meta tag */
@@ -97,6 +140,44 @@ padding-left: env(safe-area-inset-left);
 padding-right: env(safe-area-inset-right);
 padding-bottom: env(safe-area-inset-bottom);
 ```
+
+### 9. Landscape Mobile Optimization (CRITICAL)
+
+When users rotate phones to landscape, vertical space is severely limited (~320px height). Generous top padding can consume 50%+ of the screen. Add this media query:
+
+```css
+/* Landscape mobile: reduce vertical padding drastically */
+@media (max-height: 500px) and (orientation: landscape) {
+    .slide {
+        padding: 16px clamp(20px, 5vw, 80px) 60px; /* Tight top, keep bottom for nav */
+    }
+    .slide.center {
+        justify-content: flex-start; /* Don't center in cramped landscape */
+    }
+}
+```
+
+**Why this matters:** On an iPhone rotated sideways, 60px top padding + 80px bottom padding leaves only ~180px for content. This fix reclaims that space.
+
+### 10. Reduced Motion (Accessibility)
+
+Respect users who have enabled "Reduce Motion" in their OS settings (for vestibular disorders, motion sensitivity, etc.):
+
+```css
+/* Disable animations for users who prefer reduced motion */
+@media (prefers-reduced-motion: reduce) {
+    .slide,
+    .slide * {
+        animation: none !important;
+        transition: none !important;
+    }
+    .slide.active {
+        opacity: 1;
+    }
+}
+```
+
+**Why this matters:** ~10-30% of users experience motion sensitivity. This is a simple accessibility win with no downside.
 
 ## CSS Custom Properties for Consistency
 
@@ -143,8 +224,13 @@ Usage:
 - [ ] `100dvh` used alongside `100vh`
 - [ ] Touch targets ≥44px on touch devices
 - [ ] `viewport-fit=cover` in meta tag
+- [ ] **Slides use `overflow-y: auto` (no content clipping)**
+- [ ] **`justify-content: center` only on `.slide.center` (opt-in)**
+- [ ] **Landscape mobile media query included (`max-height: 500px`)**
+- [ ] **`prefers-reduced-motion` media query included**
 - [ ] Tested at 320px, 768px, 1440px viewports
 - [ ] Tested with iOS Safari, Chrome, Firefox
+- [ ] **Tested in landscape orientation on mobile**
 
 ## Testing Commands
 
@@ -167,3 +253,4 @@ open -a "Google Chrome" --args --auto-open-devtools-for-tabs
 | `height: 100vh` alone | `min-height: 100vh; min-height: 100dvh;` |
 | Inline `style="font-size: Npx"` | Use CSS classes with clamp values |
 | `@media (max-width: 600px)` for everything | Use intrinsic sizing where possible |
+| `.slide { justify-content: center }` on all slides | Only use `.slide.center` for title slides |

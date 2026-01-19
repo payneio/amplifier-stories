@@ -23,9 +23,10 @@
             width: 100vw;
             min-height: 100vh;
             min-height: 100dvh;
-            padding: clamp(24px, 6vw, 60px) clamp(20px, 5vw, 80px);
+            padding: clamp(60px, 10vw, 120px) clamp(20px, 5vw, 80px) clamp(80px, 12vw, 100px);
             flex-direction: column;
-            justify-content: center;
+            overflow-y: auto;
+            overflow-x: hidden;
         }
 
         .slide.active {
@@ -79,6 +80,25 @@
         .center {
             text-align: center;
             align-items: center;
+            justify-content: center;
+        }
+
+        /* Landscape mobile: reduce vertical padding */
+        @media (max-height: 500px) and (orientation: landscape) {
+            .slide {
+                padding: 16px clamp(20px, 5vw, 80px) 60px;
+            }
+            .slide.center {
+                justify-content: flex-start;
+            }
+        }
+
+        /* Accessibility: respect reduced motion preference */
+        @media (prefers-reduced-motion: reduce) {
+            .slide, .slide * {
+                animation: none !important;
+                transition: none !important;
+            }
         }
 
         .thirds {

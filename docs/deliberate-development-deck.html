@@ -22,19 +22,21 @@
             display: none;
             min-height: 100vh;
             min-height: 100dvh;
-            padding: clamp(24px, 6vw, 60px) clamp(20px, 5vw, 80px);
+            padding: clamp(60px, 10vw, 120px) clamp(20px, 5vw, 80px) clamp(80px, 12vw, 100px);
             position: relative;
+            overflow-y: auto;
+            overflow-x: hidden;
         }
 
         .slide.active {
             display: flex;
             flex-direction: column;
-            justify-content: center;
         }
 
         .slide.center {
             align-items: center;
             text-align: center;
+            justify-content: center;
         }
 
         /* Typography */
