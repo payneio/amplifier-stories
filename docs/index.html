@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
     <title>Amplifier Stories</title>
     <style>
         * {
@@ -11,12 +11,31 @@
             box-sizing: border-box;
         }
 
+        :root {
+            /* Fluid typography */
+            --font-headline: clamp(32px, 8vw, 56px);
+            --font-subhead: clamp(16px, 2.5vw, 20px);
+            --font-body: clamp(14px, 2vw, 15px);
+            --font-small: clamp(12px, 1.5vw, 14px);
+            
+            /* Fluid spacing */
+            --padding-page: clamp(24px, 6vw, 60px) clamp(20px, 5vw, 40px);
+            --gap-grid: clamp(16px, 3vw, 24px);
+            --radius-card: clamp(12px, 2vw, 16px);
+            
+            /* Colors */
+            --color-accent: #0A84FF;
+            --color-background: #000;
+            --color-text: #fff;
+        }
+
         body {
             font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', Roboto, sans-serif;
-            background: #000;
-            color: #fff;
+            background: var(--color-background);
+            color: var(--color-text);
             min-height: 100vh;
-            padding: 60px 40px;
+            min-height: 100dvh;
+            padding: var(--padding-page);
         }
 
         .container {
@@ -27,28 +46,28 @@
         /* Header */
         .header {
             text-align: center;
-            margin-bottom: 60px;
+            margin-bottom: clamp(32px, 8vw, 60px);
         }
 
         .section-label {
-            font-size: 14px;
+            font-size: var(--font-small);
             font-weight: 600;
             text-transform: uppercase;
             letter-spacing: 2px;
-            color: #0A84FF;
-            margin-bottom: 16px;
+            color: var(--color-accent);
+            margin-bottom: clamp(12px, 2vw, 16px);
         }
 
         .headline {
-            font-size: 56px;
+            font-size: var(--font-headline);
             font-weight: 700;
-            letter-spacing: -2px;
+            letter-spacing: clamp(-1px, -0.03em, -2px);
             line-height: 1.1;
-            margin-bottom: 16px;
+            margin-bottom: clamp(12px, 2vw, 16px);
         }
 
         .subhead {
-            font-size: 20px;
+            font-size: var(--font-subhead);
             font-weight: 400;
             color: rgba(255,255,255,0.6);
             max-width: 600px;
@@ -58,16 +77,16 @@
         /* Deck Grid */
         .deck-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
-            gap: 24px;
-            margin-top: 40px;
+            grid-template-columns: repeat(auto-fill, minmax(min(300px, 100%), 1fr));
+            gap: var(--gap-grid);
+            margin-top: clamp(24px, 5vw, 40px);
         }
 
         .deck-card {
             background: rgba(255,255,255,0.03);
             border: 1px solid rgba(255,255,255,0.08);
-            border-radius: 16px;
-            padding: 28px;
+            border-radius: var(--radius-card);
+            padding: clamp(20px, 4vw, 28px);
             text-decoration: none;
             color: inherit;
             transition: all 0.2s ease;
@@ -80,31 +99,41 @@
             transform: translateY(-2px);
         }
 
+        /* Make cards more touch-friendly on mobile */
+        @media (hover: none) {
+            .deck-card:hover {
+                transform: none;
+            }
+            .deck-card:active {
+                background: rgba(255,255,255,0.08);
+            }
+        }
+
         .deck-category {
-            font-size: 12px;
+            font-size: clamp(10px, 1.5vw, 12px);
             font-weight: 600;
             text-transform: uppercase;
             letter-spacing: 1.5px;
-            margin-bottom: 12px;
+            margin-bottom: clamp(8px, 1.5vw, 12px);
         }
 
         .deck-title {
-            font-size: 24px;
+            font-size: clamp(18px, 3vw, 24px);
             font-weight: 600;
             letter-spacing: -0.5px;
-            margin-bottom: 12px;
+            margin-bottom: clamp(8px, 1.5vw, 12px);
             line-height: 1.2;
         }
 
         .deck-description {
-            font-size: 15px;
+            font-size: var(--font-body);
             color: rgba(255,255,255,0.6);
             line-height: 1.5;
         }
 
         .deck-meta {
-            margin-top: 16px;
-            font-size: 13px;
+            margin-top: clamp(12px, 2vw, 16px);
+            font-size: clamp(11px, 1.5vw, 13px);
             color: rgba(255,255,255,0.4);
         }
 
@@ -117,19 +146,19 @@
 
         /* Footer */
         .footer {
-            margin-top: 80px;
+            margin-top: clamp(48px, 10vw, 80px);
             text-align: center;
-            padding-top: 40px;
+            padding-top: clamp(24px, 5vw, 40px);
             border-top: 1px solid rgba(255,255,255,0.1);
         }
 
         .footer-text {
-            font-size: 14px;
+            font-size: var(--font-small);
             color: rgba(255,255,255,0.4);
         }
 
         .footer-link {
-            color: #0A84FF;
+            color: var(--color-accent);
             text-decoration: none;
         }
 

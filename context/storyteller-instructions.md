@@ -28,6 +28,8 @@ Before creating a deck, gather:
 
 ### HTML Template
 
+**IMPORTANT**: All presentations must be responsive and work across devices. See `context/responsive-design.md` for complete guidelines.
+
 Start with this structure:
 
 ```html
@@ -77,7 +79,7 @@ Start with this structure:
 
 ### Navigation JavaScript
 
-Always include this for keyboard/click/dot navigation:
+Always include this for keyboard/click/dot/**touch** navigation:
 
 ```javascript
 const slides = document.querySelectorAll('.slide');
@@ -103,16 +105,36 @@ function updateNav() {
     counter.textContent = `${currentSlide + 1} / ${slides.length}`;
 }
 
+// Keyboard navigation
 document.addEventListener('keydown', (e) => {
     if (e.key === 'ArrowRight' || e.key === ' ') showSlide(currentSlide + 1);
     if (e.key === 'ArrowLeft') showSlide(currentSlide - 1);
 });
 
+// Click navigation
 document.addEventListener('click', (e) => {
     if (e.target.closest('.nav')) return;
     if (e.clientX > window.innerWidth / 2) showSlide(currentSlide + 1);
     else showSlide(currentSlide - 1);
 });
+
+// Touch/swipe navigation (REQUIRED for mobile)
+let touchStartX = 0;
+let touchEndX = 0;
+const SWIPE_THRESHOLD = 50;
+
+document.addEventListener('touchstart', (e) => {
+    touchStartX = e.changedTouches[0].screenX;
+}, { passive: true });
+
+document.addEventListener('touchend', (e) => {
+    touchEndX = e.changedTouches[0].screenX;
+    const diff = touchStartX - touchEndX;
+    if (Math.abs(diff) > SWIPE_THRESHOLD) {
+        if (diff > 0) showSlide(currentSlide + 1);
+        else showSlide(currentSlide - 1);
+    }
+}, { passive: true });
 
 updateNav();
 ```
@@ -172,14 +194,17 @@ command --flag value
 
 Before presenting to user:
 
-- [ ] Navigation works (arrows, click, dots)
+- [ ] Navigation works (arrows, click, dots, **swipe on mobile**)
 - [ ] Slide counter updates correctly
 - [ ] No horizontal scrolling on any slide
-- [ ] Code blocks don't overflow
+- [ ] Code blocks don't overflow (use `pre-wrap`)
 - [ ] Consistent color scheme throughout
 - [ ] Velocity slide has accurate numbers
 - [ ] All links are correct
 - [ ] "More Amplifier Stories" link present (links to index.html)
+- [ ] **Responsive: Text readable on mobile without zooming**
+- [ ] **Responsive: Grids collapse to single column on narrow screens**
+- [ ] **Responsive: Touch targets ≥44px for tappable elements**
 
 ## Deployment Workflow
 

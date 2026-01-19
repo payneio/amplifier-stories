@@ -19,46 +19,84 @@ Higher information density while maintaining polish. Use for most decks.
 - Navigation dots at bottom center
 - Slide counter at bottom right
 
-**CSS Essentials:**
+**CSS Essentials (Responsive):**
+
+See `context/responsive-design.md` for complete responsive guidelines.
+
 ```css
+:root {
+    /* Fluid typography - scales with viewport */
+    --font-headline: clamp(32px, 8vw, 72px);
+    --font-medium-headline: clamp(24px, 5vw, 48px);
+    --font-subhead: clamp(16px, 3vw, 32px);
+    --font-big-number: clamp(60px, 20vw, 180px);
+    
+    /* Fluid spacing */
+    --padding-slide: clamp(20px, 5vw, 80px);
+    --gap-grid: clamp(16px, 3vw, 40px);
+}
+
 body {
     font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', Roboto, sans-serif;
     background: #000;
     color: #fff;
+    overflow: hidden;
+    overscroll-behavior: none;
+}
+
+.slide {
+    min-height: 100vh;
+    min-height: 100dvh; /* Dynamic viewport for mobile */
+    padding: var(--padding-slide);
+    overflow-y: auto;
+    overflow-x: hidden;
 }
 
 .section-label {
-    font-size: 14px;
+    font-size: clamp(12px, 1.5vw, 14px);
     font-weight: 600;
     text-transform: uppercase;
     letter-spacing: 2px;
-    color: var(--accent-color);
+    color: var(--accent-color, #0A84FF);
 }
 
 .headline {
-    font-size: 72px;
+    font-size: var(--font-headline);
     font-weight: 700;
-    letter-spacing: -2px;
+    letter-spacing: clamp(-1px, -0.03em, -2px);
     line-height: 1.1;
+}
+
+.big-number {
+    font-size: var(--font-big-number);
+}
+
+/* Responsive grids - collapse on mobile */
+.thirds, .split {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(280px, 100%), 1fr));
+    gap: var(--gap-grid);
 }
 
 .card {
     background: rgba(255,255,255,0.05);
     border: 1px solid rgba(255,255,255,0.1);
-    border-radius: 16px;
-    padding: 28px;
+    border-radius: clamp(12px, 2vw, 16px);
+    padding: clamp(16px, 4vw, 28px);
 }
 
 .code-block {
     background: rgba(255,255,255,0.05);
     border: 1px solid rgba(255,255,255,0.1);
     border-radius: 12px;
-    padding: 20px 28px;
+    padding: clamp(12px, 3vw, 20px) clamp(16px, 4vw, 28px);
     font-family: 'SF Mono', 'Fira Code', 'Courier New', monospace;
-    font-size: 15px;
+    font-size: clamp(12px, 2vw, 15px);
     line-height: 1.6;
-    white-space: pre;  /* CRITICAL: Preserves line breaks and indentation */
+    white-space: pre-wrap;  /* WRAP long lines on mobile */
+    word-wrap: break-word;
     overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
 }
 ```
 
