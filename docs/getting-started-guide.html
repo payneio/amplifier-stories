@@ -305,10 +305,10 @@ amplifier
         <h2 class="medium-headline">What you need to know</h2>
         <ul class="feature-list">
             <li><span class="check">/</span> <code>/help</code> — Show available commands</li>
-            <li><span class="check">/</span> <code>/bundle</code> — List or change active bundle</li>
-            <li><span class="check">/</span> <code>/mode</code> — Activate behavior modes (plan, review, explore)</li>
-            <li><span class="check">/</span> <code>/history</code> — Show conversation history</li>
-            <li><span class="check">/</span> <code>/exit</code> — End session gracefully</li>
+            <li><span class="check">/</span> <code>/tools</code> — List available tools</li>
+            <li><span class="check">/</span> <code>/agents</code> — Show available agents</li>
+            <li><span class="check">/</span> <code>/status</code> — Display session status</li>
+            <li><span class="check">/</span> <code>exit</code> or Ctrl+C — End session gracefully</li>
         </ul>
         <div class="small-text" style="margin-top: 24px;">
             Type any of these at the prompt to use them
@@ -344,11 +344,11 @@ amplifier
             </div>
             <div class="card">
                 <div class="card-title">Where are sessions saved?</div>
-                <div class="card-text"><code>~/.amplifier/sessions/</code> — Full conversation history in JSONL format</div>
+                <div class="card-text"><code>~/.amplifier/projects/&lt;project-slug&gt;/sessions/</code> — Full conversation history in JSONL format</div>
             </div>
             <div class="card">
                 <div class="card-title">How do I add tools?</div>
-                <div class="card-text">Use bundles! <code>amplifier bundle add &lt;bundle-name&gt;</code></div>
+                <div class="card-text">Use bundles! <code>amplifier bundle add git+https://github.com/org/bundle-name</code></div>
             </div>
             <div class="card">
                 <div class="card-title">Can I use it offline?</div>

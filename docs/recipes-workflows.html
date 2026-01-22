@@ -308,19 +308,26 @@ description: Review and deploy code changes
 steps:
   - id: analyze
     agent: foundation:explorer
+    output: analysis
     prompt: "Analyze changes in {{file_path}}"
   
   - id: review
     agent: foundation:zen-architect
-    prompt: "Review code quality: {{steps.analyze.result}}"
+    prompt: "Review code quality: {{analysis}}"
+
+<span class="code-comment"># Approvals configured in staged mode</span>
+stages:
+  - name: review
+    steps: [analyze, review]
+    approval:
+      required: true
+      prompt: "Approve deployment?"
   
-  - id: approval
-    type: approval_gate
-    message: "Approve deployment?"
-  
-  - id: deploy
-    type: bash
-    command: "deploy.sh {{file_path}}"</div>
+  - name: deploy
+    steps:
+      - id: deploy
+        type: bash
+        command: "deploy.sh {{file_path}}"</div>
     </div>
 
     <!-- Slide 5: Key Features -->
@@ -330,7 +337,7 @@ steps:
         <div class="thirds">
             <div class="card">
                 <div class="card-title">Context Accumulation</div>
-                <div class="card-text">Results from each step available to subsequent steps via <code>{{steps.stepId.result}}</code></div>
+                <div class="card-text">Use <code>output</code> field to create named variables (e.g., <code>output: analysis</code>) then reference directly: <code>{{analysis}}</code></div>
             </div>
             <div class="card">
                 <div class="card-title">Approval Gates</div>
@@ -346,7 +353,7 @@ steps:
             </div>
             <div class="card">
                 <div class="card-title">Parallel Execution</div>
-                <div class="card-text">Run multiple steps concurrently with <code>type: parallel</code>. Speed up independent work.</div>
+                <div class="card-text">Use <code>parallel: N</code> field on foreach loops to run iterations concurrently. Speed up independent work.</div>
             </div>
             <div class="card">
                 <div class="card-title">Conditional Logic</div>
@@ -386,13 +393,14 @@ steps:
         <div class="section-label">Fault Tolerance</div>
         <h2 class="medium-headline">Resume where you left off</h2>
         <div class="code-block"><span class="code-comment"># Recipe interrupted at step 3? No problem.</span>
-amplifier tool invoke recipes \\
-  operation=resume \\
-  session_id=recipe_20260121_abc123
+amplifier run "resume recipe session recipe_20260121_abc123"
+
+<span class="code-comment"># Or via in-session command:</span>
+> Resume the recipe workflow
 
 <span class="code-comment"># Picks up exactly where it stopped</span>
 <span class="code-comment"># All previous step results preserved</span>
-<span class="comment"># Context accumulation intact</span></div>
+<span class="code-comment"># Context accumulation intact</span></div>
         <div class="highlight-box">
             <strong>Long-running workflows.</strong> Close your laptop, go to meetings, come back and resume. The recipe waits.
         </div>

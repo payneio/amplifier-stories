@@ -519,43 +519,39 @@
     <!-- Slide 7: Usage - CLI -->
     <div class="slide">
         <div class="section-label">Usage: CLI</div>
-        <h2 class="medium-headline">Fork from command line</h2>
+        <h2 class="medium-headline">Manage sessions from command line</h2>
         
         <div class="code-block">
-<span class="code-comment"># Fork with interactive turn selection</span>
-amplifier session fork abc123-def456
+<span class="code-comment"># List all sessions</span>
+amplifier session list
 
-<span class="code-comment"># Shows turns newest-first, pick your fork point</span>
-Select turn to fork from:
-  [5] You: "Let's try the caching approach"
-  [4] Assistant: Here's the implementation...
-  [3] You: "Actually, what about performance?"  <span class="code-keyword">← select this</span>
-  [2] Assistant: Good question, we could...
-  [1] You: "Build me a data pipeline"
-        </div>
-        
-        <div class="code-block">
-<span class="code-comment"># View your fork tree</span>
-amplifier session tree
-        </div>
-    </div>
+<span class="code-comment"># Show specific session details (includes parent_id if forked)</span>
+amplifier session show abc123-def456
 
-    <!-- Slide 8: Usage - In-Chat -->
-    <div class="slide">
-        <div class="section-label">Usage: In-Chat</div>
-        <h2 class="medium-headline">Fork without leaving your conversation</h2>
-        
-        <div class="code-block">
-<span class="code-comment"># Just type /fork in any session</span>
-/fork
-
-<span class="code-comment"># Select a turn, fork is created</span>
-<span class="code-comment"># You stay in current session - fork runs in background</span>
+<span class="code-comment"># Resume a session</span>
+amplifier session resume abc123-def456
         </div>
         
         <div class="highlight-box">
-            <strong>Key behavior:</strong> The /fork command creates the fork but keeps you in your current session. 
-            No context switch. Resume the fork later when you're ready.
+            <strong>Session lineage:</strong> Use <code>session show</code> to see parent_id linking, which tracks session forking relationships.
+        </div>
+    </div>
+
+    <!-- Slide 8: Usage - In-Session -->
+    <div class="slide">
+        <div class="section-label">Usage: In-Session</div>
+        <h2 class="medium-headline">Create alternate explorations</h2>
+        
+        <div class="code-block">
+<span class="code-comment"># Request alternative approaches in your conversation</span>
+> Let's explore a different approach - try using caching instead
+
+<span class="code-comment"># The agent can spawn sub-sessions for parallel exploration</span>
+<span class="code-comment"># Each exploration maintains its own context</span>
+        </div>
+        
+        <div class="highlight-box">
+            <strong>Conceptual forking:</strong> While explicit fork commands aren't available, you can explore alternatives by asking the agent to try different approaches. Sub-sessions created via the task tool maintain parent_id links.
         </div>
     </div>
 
@@ -680,9 +676,9 @@ inherit_hooks: <span class="code-string">true</span>
         <h2 class="headline">Branch your thinking.</h2>
         <p class="subhead" style="margin-top: 24px;">Explore without fear. Every path is preserved.</p>
         <div class="code-block" style="margin-top: 40px; display: inline-block; text-align: left;">
-amplifier session fork &lt;session-id&gt;
-amplifier session tree
-/fork
+amplifier session list
+amplifier session show &lt;session-id&gt;
+amplifier session resume &lt;session-id&gt;
         </div>
         <div class="small-text" style="margin-top: 40px;">
             github.com/microsoft/amplifier-app-cli<br>
